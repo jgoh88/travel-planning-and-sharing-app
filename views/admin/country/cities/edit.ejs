@@ -1,0 +1,39 @@
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-1 container-fluid border-end vh-88">
+        <%- include('../partials/sidebar') %>
+    </div>
+    <div class="col ms-2 me-3">
+        <form action="/admin/country/city?_method=PUT" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col">
+                    <h2>Add Cities</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3">
+                    <div>
+                        <label for=""></label>
+                        <input type="text" name="cities[0][name]" placeholder="Name of city" class="form-control">
+                    </div>
+                    <div>
+                        <label for=""></label>
+                        <input type="text" name="cities[1][name]" placeholder="Name of city" class="form-control">
+                    </div>
+                </div>
+                <div class="col-3">
+                    <div>
+                        <label for=""></label>
+                        <input type="file" name="cities[0][image]" placeholder="Image of the city" class="form-control">
+                    </div>
+                    <div>
+                        <label for=""></label>
+                        <input type="file" name="cities[1][image]" placeholder="Image of the city" class="form-control">
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

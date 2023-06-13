@@ -1,0 +1,42 @@
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-1 container-fluid border-end vh-88">
+        <%- include('../partials/sidebar') %>
+    </div>
+    <div class="col ms-2 me-3">
+        <form action="/admin/country/new" method="POST" enctype="multipart/form-data">
+            <div class="row">
+                <div class="col">
+                    <h2>Add Country</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <div>
+                        <label for=""></label>
+                        <input type="text" name="name" placeholder="Name of country" required class="form-control">
+                    </div>
+                    <div>
+                        <label for=""></label>
+                        <textarea name="description" placeholder="Description about the country" rows="3" class="form-control" required></textarea>
+                    </div>
+                    <div>
+                        <label for=""></label>
+                        <textarea name="timeToVisit" placeholder="Recommended time to visit the country" rows="3" class="form-control"></textarea>
+                    </div>
+                    <div>
+                        <label for=""></label>
+                        <input type="file" name="image" placeholder="Image of the country" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col-6">
+                    <button type="submit" class="btn btn-success">Save and add cities</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
