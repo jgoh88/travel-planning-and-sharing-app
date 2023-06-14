@@ -18,6 +18,12 @@ const tripSchema = new Schema({
         default: false,
     },
     description: String,
+    images: [
+        {
+            url: String,
+            publicID: String,
+        }
+    ],
     itinerary: [
         [{
             location: String,

@@ -35,9 +35,9 @@ const uploadToCloudinary = async (fileString, format) => {
     }
 }
 
-const uploadImage = async (req) => {
+const uploadImage = async (file) => {
     try {
-        const {file} = req
+        // const {file} = req
         const fileFormat = file.mimetype.split('/')[1]
         const {base64} = bufferToDataURI(fileFormat, file.buffer)
 

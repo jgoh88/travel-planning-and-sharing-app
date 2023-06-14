@@ -1,36 +1,122 @@
 const router = require('express').Router()
 const Country = require('../models/country.model')
+const cloudinary = require('cloudinary').v2
 const {upload, uploadImage, setCloudinaryFolder} = require('../configs/cloudinary.config')
 
 router.get('/', (req, res) => {
     return res.render('admin/admin')
 })
 
-router.get('/country', (req, res) => {
-    return res.render('admin/country/list')
+router.get('/country', async (req, res) => {
+    try {
+        const countries = await Country.find()
+        return res.render('admin/country/list', {countries: countries})
+    } catch (err) {
+        console.log(err)
+        return res.render('error/500')
+    }  
 })
 
 router.get('/country/new', (req, res) => {
     return res.render('admin/country/create')
 })
 
-// router.get('/country/city')
+router.get('/country/:id', async (req, res) => {
+    try {
+        const country = await Country.findById(req.params.id)
+        return res.render('admin/country/show', {country: country})
+    } catch (err) {
+        console.log(err)
+        return res.redirect('error/500')
+    }
+})
 
-router.post('/country/new', upload.single('image'), async (req, res) => {
+router.get('/country/:id/edit', async (req, res) => {
+    try {
+        const country = await Country.findById(req.params.id)
+        return res.render('admin/country/edit', {country: country})
+    } catch (err) {
+        console.log(err)
+        return res.redirect('error/500')
+    }
+})
+
+router.post('/country', upload.single('image'), async (req, res) => {
 
     try {
         const newCountry = new Country(req.body)
         if (req.file) {
-            const imageDetails = await uploadImage(req)
-            newCountry.image = imageDetails.secure_url
+            setCloudinaryFolder('admin/country')
+            const imageDetails = await uploadImage(req.file)
+            newCountry.image.url = imageDetails.secure_url
+            newCountry.image.publicID = imageDetails.public_id
         }
     
         await newCountry.save()
-        return res.redirect('/admin/country/new')
+        return res.redirect('/admin/country')
     } catch (err) {
         console.log(err)
         return res.redirect('/admin/country/new')
     }
 })
+
+router.put('/country/:id', upload.single('image'), async (req, res) => {
+    try {
+        const updatedCountry = req.body
+        if (req.file) {
+            setCloudinaryFolder('admin/country')
+            const imageDetails = await uploadImage(req.file)
+            updatedCountry.image = {}
+            updatedCountry.image.url = imageDetails.secure_url
+            updatedCountry.image.publicID = imageDetails.public_id
+        }
+        const beforeUpdateCountry = await Country.findByIdAndUpdate(req.params.id, {
+            $set: {
+                ...updatedCountry
+            }
+        })
+        if (req.file) {
+            await cloudinary.uploader.destroy(beforeUpdateCountry.image.publicID, 'image')
+        }
+        return res.redirect(`/admin/country/${req.params.id}`)
+    } catch (err) {
+        console.log(err)
+        return res.redirect(`/admin/country/${req.params.id}/edit`)
+    }
+})
+
+router.delete('/country/:id', async (req, res) => {
+    try {
+        const deletedCountry = await Country.findByIdAndDelete(req.params.id)
+        await cloudinary.uploader.destroy(deletedCountry.image.publicID, 'image')
+        return res.redirect('/admin/country')
+    } catch (err) {
+        console.log(err)
+        return res.redirect(`/admin/country/${req.params.id}`)
+    }
+})
+
+// For cities
+
+// router.get('/country/:id/city/edit', async (req, res) => {
+//     try {
+//         const country = await Country.findById(req.params.id)
+//         return res.render('admin/country/city/edit', {country: country})
+//     } catch (err) {
+//         console.log(err)
+//         return res.redirect('error/500')
+//     }
+// })
+
+// router.patch('/country/:id', upload.array('image'), async (req, res) => {
+//     try {
+//         console.log(req.body)
+//         console.log('req.file:', req.file)
+//         console.log('req.files:', req.files)
+//     } catch (err) {
+//         console.log(err)
+//         return res.redirect(`/country/${req.params.id}/city/edit`)
+//     }
+// })
 
 module.exports = router

@@ -1,0 +1,44 @@
+<br>
+<br>
+<br>
+<br>
+<div class="row">
+    <div class="col-1 border-end vh-88" style="width: 143px;">
+        <%- include('../partials/sidebar') %>
+    </div>
+    <div class="col ms-2 me-3">
+        <div class="row">
+            <div class="col">
+                <h2>Edit <%= country.name %></h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <form action="/admin/country/<%= country._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+                    <div class="mb-2">
+                        <label for="" class="fw-bold mb-1">Name of country</label>
+                        <input type="text" name="name" placeholder="Name of country" required class="form-control" value="<%= country.name %>">
+                    </div>
+                    <div class="mb-2">
+                        <label for="" class="fw-bold mb-1">Description about the country</label>
+                        <textarea name="description" placeholder="Description about the country" rows="3" class="form-control" required><%= country.description %></textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label for="" class="fw-bold mb-1">Recommended time to visit the country</label>
+                        <textarea name="timeToVisit" placeholder="Recommended time to visit the country" rows="3" class="form-control"><%= country.timeToVisit %></textarea>
+                    </div>
+                    <div class="mb-2">
+                        <label for="" class="fw-bold mb-1">Image of the country</label>
+                        <div>
+                            <img src="<%= country.image.url %>" class="img-thumbnail" style="height: 200px; width: 200px;" alt="">
+                        </div>
+                        <input type="file" name="image" placeholder="Image of the country" class="form-control">
+                    </div>
+                    <div class="mb-2">
+                        <button type="submit" class="btn btn-success me-2">Save and close</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

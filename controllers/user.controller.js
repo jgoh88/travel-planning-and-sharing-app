@@ -3,8 +3,6 @@ const passport = require('passport')
 const User = require('../models/user.model')
 const {upload, uploadImage, setCloudinaryFolder} = require('../configs/cloudinary.config')
 
-setCloudinaryFolder('user/profilePicture')
-
 router.get('/register', (req, res) => {
     return res.render('user/register')
 })
@@ -18,7 +16,8 @@ router.post('/', upload.single('profilePicture'), async (req, res) => {
 
         const newUser = new User(req.body)
         if (req.file) {
-            const imageDetails = await uploadImage(req)
+            setCloudinaryFolder('user/profilePicture')
+            const imageDetails = await uploadImage(req.file)
             newUser.profilePicture = imageDetails.secure_url
         }
     

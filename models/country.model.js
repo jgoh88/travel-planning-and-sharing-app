@@ -9,14 +9,23 @@ const countrySchema = new Schema({
     cities: [
         {
             name: String,
-            image: String,
+            image: {
+                url: String,
+                publicID: String
+            },
         }
     ],
     description: String,
     timeToVisit: String,
     image: {
-        type: String,
-        required: true,
+        url: {
+            type: String,
+            required: true
+        },
+        publicID: {
+            type: String,
+            required: true
+        },
     },
 })
 

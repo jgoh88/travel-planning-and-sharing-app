@@ -51,8 +51,12 @@ server.use(function (request, response, next) {
     next()
 })
 
+server.get('/', (req, res) => {
+    res.render('trip/index')
+})
+
 // Use routers/controllers
-server.use(tripController)
+server.use('/trip', tripController)
 server.use('/user', userController)
 server.use('/admin', adminController)
 

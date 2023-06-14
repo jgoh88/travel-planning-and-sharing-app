@@ -1,0 +1,83 @@
+<br>
+<br>
+<br>
+<br>
+<div class="row d-flex justify-content-center">
+    <div class="col-8 ms-2 me-3 text-center">
+        <h2>Go through your tripping plan</h2>
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col-6">
+        Trip name:
+        <h3 class="d-flex flex-row align-items-center mb-0 mt-0">
+            <%= trip.name %>
+        </h3>
+    </div>
+    <div class="col-3">
+        Country:
+        <h3 class="d-flex flex-row align-items-center mb-0 mt-0">
+            <%= trip.country.name %>
+        </h3>
+    </div>
+    <div class="col d-flex flex-row align-items-end justify-content-end">
+        <form action="/trip/<%= trip._id %>/edit" class="me-2">
+            <button type="submit" class="btn btn-primary">Edit</button>
+        </form>
+        <form action="/trip/<%= trip._id %>?_method=DELETE" method="POST">
+            <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+    </div>
+</div>
+<div class="row ms-3 me-3 mt-3">
+    <div class="col">
+        <div class="row">
+            <ul class="nav nav-tabs" id="tripTab" role="tablist">
+                <% trip.itinerary.forEach((day, idx) => { %>
+                    <li class="nav-item" role="presentation">
+                        <% if (idx === 0) { %>
+                            <button class="nav-link active" id="day<%= idx+1 %>-tab" data-bs-toggle="tab" data-bs-target="#day<%= idx+1 %>-tab-pane" type="button" role="tab" aria-controls="day<%= idx+1 %>-tab-pane" aria-selected="true">Day <%= idx+1 %></button>
+                        <% } else { %>
+                            <button class="nav-link" id="day<%= idx+1 %>-tab" data-bs-toggle="tab" data-bs-target="#day<%= idx+1 %>-tab-pane" type="button" role="tab" aria-controls="day<%= idx+1 %>-tab-pane">Day <%= idx+1 %></button>
+                        <% } %>
+                    </li>
+                <% }) %>
+            </ul>
+
+            <div class="tab-content border-start border-end border-bottom" id="tripTabContent">
+                <% trip.itinerary.forEach((day, dayIdx) => { %>
+                    <% if (dayIdx === 0) { %>
+                        <div class="tab-pane fade show active" id="day<%= dayIdx+1 %>-tab-pane" role="tabpanel" aria-labelledby="day<%= dayIdx+1 %>-tab" tabindex="<%= dayIdx %>">
+                    <% } else { %>
+                        <div class="tab-pane fade" id="day<%= dayIdx+1 %>-tab-pane" role="tabpanel" aria-labelledby="day<%= dayIdx+1 %>-tab" tabindex="<%= dayIdx %>">
+                    <% } %>
+                        <% day.forEach((place, placeIdx) => { %>
+                            <div class="card mb-3 mt-3 bg-primary text-white">
+                                <div class="card-body">
+                                    <div class="mb-3">
+                                        <label for="" class="form-label">Place</label>
+                                        <input disabled type="text" class="form-control fw-medium" value="<%= trip.itinerary[dayIdx][placeIdx].location %>">
+                                        <a class="text-light" target="_blank" href="https://www.google.com/maps?q=<%= trip.itinerary[dayIdx][placeIdx].location %>">Open in Google Maps</a>
+                                        
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="" class="form-label">Time</label>
+                                        <input disabled type="time" class="form-control fw-medium" 
+                                            <% if (trip.itinerary[dayIdx][placeIdx].time) { %>
+                                                value="<%= trip.itinerary[dayIdx][placeIdx].time.toTimeString().slice(0, 5) %>"
+                                            <% } %>
+                                            >
+                                    </div>
+                                    <div class="mb-1">
+                                        <label for="" class="form-label">Note</label>
+                                        <textarea disabled class="form-control fw-medium"><%= trip.itinerary[dayIdx][placeIdx].note %></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,13 +1,14 @@
 <br>
 <br>
 <br>
+<br>
 <div class="row">
-    <div class="col-1 container-fluid border-end">
+    <div class="col-1 border-end vh-88" style="width: 143px;">
         <%- include('../partials/sidebar') %>
     </div>
     <div class="col ms-2 me-3">
         <div class="row">
-            <div class="cold d-flex flex-row justify-content-between align-items-center">
+            <div class="col d-flex flex-row justify-content-between align-items-center">
                 <h2>Manage Country</h2>
                 <form action="/admin/country/new">
                     <button type="submit" class="btn btn-primary">Add country</button>
@@ -16,21 +17,22 @@
         </div>
         <div class="row">
             <div class="col">
-                <div class="card"></div>
                     <% countries.forEach((country) => { %>
-                        <div class="card-header">
-                            <h3><%= country.name %></h3>
-                        </div>
-                        <div class="card-body">
-                            <p>Description:</p>
-                            <p><%= country.description %></p>
-                            <div class="d-flex flex-row justify-content-end">
-                                <form action="/admin/country/<%= country._id %>/edit">
-                                    <button type="submit" class="btn btn-primary">Edit</button>
-                                </form>
-                                <form action="/admin/country/<%= country._id %>?_method=DELETE" method="POST">
-                                    <button type="submit" class="btn btn-danger">Delete</button>
-                                </form>
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <a href="/admin/country/<%= country._id %>" class="text-primary"><h3><%= country.name %></h3></a>
+                                
+                            </div>
+                            <div class="card-body">
+                                <p><%= country.description %></p>
+                                <div class="d-flex flex-row">
+                                    <form action="/admin/country/<%= country._id %>/edit" class="me-2">
+                                        <button type="submit" class="btn btn-primary">Edit</button>
+                                    </form>
+                                    <form action="/admin/country/<%= country._id %>?_method=DELETE" method="POST">
+                                        <button type="submit" class="btn btn-danger">Delete</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     <% }) %>
