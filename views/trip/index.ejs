@@ -5,8 +5,8 @@
 <div class="row d-flex justify-content-center align-items-center" style="height: 15vh;">
     <div class="col-5 text-center mb-5">
         <h2 class="mb-4">Find Tripping travel plans from others</h2>
-        <form action="/trip/search" method="POST" class="d-flex justify-content-evenly">
-            <input class="form-control me-2" placeholder="Search by country" name="searchTerm">
+        <form action="/trip/search" class="d-flex justify-content-evenly">
+            <input class="form-control me-2" placeholder="Search by country or keywords separated by space" name="searchTerm">
             <button class="btn btn-outline-primary" type="submit">Search</button>
         </form>
     </div>
@@ -22,7 +22,7 @@
             <div class="card mb-4" style="width: 470px;">
                 <a href="/trip/<%= trip._id %>">
                     <% if (trip.images.length === 0) { %>
-                        <img src="<%= trip.country.image.url %>" alt="" class="card-img-top" style="height: 350px;">
+                        <img src="<%= trip.country.countryId.image.url %>" alt="" class="card-img-top" style="height: 350px;">
                     <% } else { %>
                         <img src="<%= trip.images[0].url %>" alt="" class="card-img-top" style="height: 350px;">
                     <% } %>
@@ -30,7 +30,7 @@
                 <div class="card-body">
                     <h4 class="card-title"><%= trip.name %></h4>
                     <p class="card-text">
-                        Country: <%= trip.country.name %> <br>
+                        Country: <%= trip.country.countryId.name %> <br>
                         Number of days: <%= trip.itinerary.length  %>
                     </p>
                     <p class="fw-medium"><%= trip.description %></p>
@@ -52,3 +52,10 @@
         <% }) %>
     </div>
 </div>
+<script>
+    const homeMenu = document.getElementById('home-menu')
+    if (homeMenu) {
+        homeMenu.classList.add('active')
+        homeMenu.setAttribute('aria-current', 'page')
+    }
+</script>

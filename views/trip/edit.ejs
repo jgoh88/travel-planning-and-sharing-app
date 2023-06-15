@@ -18,10 +18,10 @@
         <div class="col-auto">
             <label for="">Country</label>
             <h3 class="d-flex flex-row align-items-center mb-0 mt-0">
-                <select class="form-control fs-4 fw-medium" name="country" required>
+                <select class="form-control fs-4 fw-medium" name="country[countryId]" required>
                     <option value="" disabled>Choose the country for your trip</option>
                     <% countries.forEach((country) => { %>
-                        <option value="<%= country._id %>" <% if (country._id === trip.country._id) { %>selected="selected"<% } %> ><%= country.name %></option>
+                        <option value="<%= country._id %>" <% if (country._id === trip.country.countryId) { %>selected="selected"<% } %> ><%= country.name %></option>
                     <% }) %>
                 </select>
             </h3>
