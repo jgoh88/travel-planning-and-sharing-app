@@ -15,6 +15,7 @@ const User = require('./models/user.model')
 const tripController = require('./controllers/trip.controller')
 const userController = require('./controllers/user.controller')
 const adminController = require('./controllers/admin.controller')
+const countryController = require('./controllers/country.controller')
 
 // Initialize modules
 const server = express()
@@ -62,6 +63,7 @@ server.get('/', async (req, res) => {
 server.use('/trip', tripController)
 server.use('/user', userController)
 server.use('/admin', adminController)
+server.use('/country', countryController)
 
 // Run server
 server.listen(PORT, () => console.log(`Running on port ${PORT}`))

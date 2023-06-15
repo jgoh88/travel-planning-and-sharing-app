@@ -5,3 +5,10 @@
 .vh-88{
     height: 88vh;
 }
+
+.text-truncate-container p {
+    -webkit-line-clamp: 5;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}

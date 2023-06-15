@@ -33,7 +33,9 @@
                         Country: <%= trip.country.countryId.name %> <br>
                         Number of days: <%= trip.itinerary.length  %>
                     </p>
-                    <p class="fw-medium"><%= trip.description %></p>
+                    <div class="text-truncate-container mb-3" style="height: 120px;">
+                        <p class="fw-medium"><%= trip.description %></p>
+                    </div>
                     <% if (currentUser) { %>
                         <div>
                             <% if (user.favorites.indexOf(trip._id) > -1) { %>

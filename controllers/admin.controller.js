@@ -78,7 +78,7 @@ router.put('/country/:id', upload.single('image'), async (req, res) => {
         if (req.file) {
             await cloudinary.uploader.destroy(beforeUpdateCountry.image.publicID, 'image')
         }
-        return res.redirect(`/admin/country/${req.params.id}`)
+        return res.redirect('/admin/country')
     } catch (err) {
         console.log(err)
         return res.redirect(`/admin/country/${req.params.id}/edit`)

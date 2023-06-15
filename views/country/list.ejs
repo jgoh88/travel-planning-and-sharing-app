@@ -1,0 +1,37 @@
+<br>
+<br>
+<br>
+<br>
+<div class="row d-flex justify-content-center mb-5">
+    <div class="col-10 border-bottom">
+        <h2>Information on places to visit</h2>
+    </div>
+</div>
+<div class="row">
+    <div class="col d-flex flex-wrap flex-row justify-content-evenly">
+        <% countries.forEach((country) => { %>
+            <div class="card mb-4" style="width: 470px;">
+                <a href="/country/<%= country._id %>">
+                    <% if (country.image) { %>
+                        <img src="<%= country.image.url %>" alt="" class="card-img-top" style="height: 350px;">
+                    <% } %>
+                </a>
+                <div class="card-body">
+                    <h4 class="card-title"><%= country.name %></h4>
+                    <div class="text-truncate-container mb-3" style="height: 120px;">
+                        <p class="card-text">
+                            <%= country.description %>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        <% }) %>
+    </div>
+</div>
+<script>
+    const placesToVisitMenu = document.getElementById('places-to-visit-menu')
+    if (placesToVisitMenu) {
+        placesToVisitMenu.classList.add('active')
+        placesToVisitMenu.setAttribute('aria-current', 'page')
+    }
+</script>
