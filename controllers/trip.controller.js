@@ -1,7 +1,52 @@
 const router = require('express').Router()
 const Trip = require('../models/trip.model')
 const Country = require('../models/country.model')
+const User = require('../models/user.model')
 const {upload, uploadImage, setCloudinaryFolder} = require('../configs/cloudinary.config')
+
+router.get('/my', async (req, res) => {
+    try {
+        const trips = await Trip.find({createdBy: req.user.id}).populate('country')
+        const countries = await Country.find()
+        return res.render('trip/userList', {trips: trips, countries: countries})
+    } catch (err) {
+        console.log(err)
+        return res.render('error/500')
+    }
+})
+
+router.get('/favorites', async (req, res) => {
+    try {
+        const user = await User.findById(req.user.id).populate({
+            path: 'favorites',
+            populate: {
+                path: 'country'
+            }
+        })
+        const trips = user.favorites
+        return res.render('trip/favoriteList', {trips: trips, user: req.user})
+    } catch (err) {
+        console.log(err)
+        return res.render('error/500')
+    }
+})
+
+router.get('/search', async (req, res) => {
+    try {
+        // const trips = await Trip.find({
+        //     shared: true,
+        //     $search: {
+        //         "regex": {
+        //             "query": `${req.body.searchTerm}.*`
+        //             "path": []
+        //         }
+        //     }
+        // })
+    } catch (err) {
+        console.log(err)
+        return res.render('error/500')
+    }
+})
 
 router.get('/:id', async (req, res) => {
     try {
@@ -25,17 +70,6 @@ router.get('/:id/edit', async (req, res) => {
     }
 })
 
-router.get('/user/:id', async (req, res) => {
-    try {
-        const trips = await Trip.find({createdBy: req.user.id}).populate('country')
-        const countries = await Country.find()
-        return res.render('trip/userList', {trips: trips, countries: countries})
-    } catch (err) {
-        console.log(err)
-        return res.render('error/500')
-    }
-})
-
 router.post('/', async (req, res) => {
     try {
         const newTrip = new Trip({...req.body, createdBy: req.user.id})
@@ -51,7 +85,7 @@ router.post('/', async (req, res) => {
         return res.redirect(`/trip/${newTrip._id}/edit`)
     } catch (err) {
         console.log(err)
-        return res.redirect(`/trip/user/${req.user.id}`)
+        return res.redirect(`/trip/my`)
     }
 })
 
@@ -73,7 +107,7 @@ router.put('/:id', async (req, res) => {
                 ...updatedTrip
             }
         })
-        return res.redirect(`/trip/user/${req.user.id}`)
+        return res.redirect(`/trip/my`)
     } catch (err) {
         console.log(err)
         return res.redirect(`/trip/${req.params.id}/edit`)
@@ -84,6 +118,7 @@ router.patch('/:id', upload.array('image', 10), async (req, res) => {
     try {
         const sharedTrip = req.body
         sharedTrip.shared = true
+        sharedTrip.sharedAt = new Date()
         if (req.files) {
             sharedTrip.images = []
             setCloudinaryFolder('trip/images')
@@ -101,14 +136,14 @@ router.patch('/:id', upload.array('image', 10), async (req, res) => {
     } catch (err) {
         console.log(err)
     } finally {
-        return res.redirect(`/trip/user/${req.user.id}`)
+        return res.redirect(`/trip/my`)
     }
 })
 
 router.delete('/:id', async (req, res) => {
     try {
         await Trip.findByIdAndDelete(req.params.id)
-        return res.redirect(`/trip/user/${req.user.id}`)
+        return res.redirect(`/trip/my`)
     } catch (err) {
         console.log(err)
         return res.render('error/500')

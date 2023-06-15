@@ -17,6 +17,7 @@ const tripSchema = new Schema({
         type: Boolean,
         default: false,
     },
+    sharedAt: Date,
     description: String,
     images: [
         {
@@ -30,7 +31,13 @@ const tripSchema = new Schema({
             time: Date,
             note: String,
         }]
-    ]
+    ],
+    favoritedBy: [
+        {
+            type: mongoose.ObjectId,
+            ref: 'User',
+        }
+    ],
 }, {timestamps: true})
 
 const Trip = mongoose.model('Trip', tripSchema)

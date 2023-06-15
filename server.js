@@ -8,6 +8,8 @@ const session = require('express-session')
 const MongoStore = require('connect-mongo')
 const flash = require('connect-flash')
 require('dotenv').config()
+const Trip = require('./models/trip.model')
+const User = require('./models/user.model')
 
 // Import routers/controllers
 const tripController = require('./controllers/trip.controller')
@@ -51,8 +53,9 @@ server.use(function (request, response, next) {
     next()
 })
 
-server.get('/', (req, res) => {
-    res.render('trip/index')
+server.get('/', async (req, res) => {
+    const trips = await Trip.find({shared: true}).limit(10).sort({sharedAt: -1}).populate('country')
+    res.render('trip/index', {trips: trips, user: req.user})
 })
 
 // Use routers/controllers

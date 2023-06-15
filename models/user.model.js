@@ -24,12 +24,6 @@ const userSchema = new Schema({
         type: String,
         default: 'https://icon-library.com/images/default-profile-icon/default-profile-icon-24.jpg',
     },
-    trips: [
-        {
-            type: mongoose.ObjectId,
-            ref: 'Trip',
-        }
-    ],
     favorites: [
         {
             type: mongoose.ObjectId,

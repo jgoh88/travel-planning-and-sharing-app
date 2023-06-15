@@ -26,8 +26,8 @@
                         Trips
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="/trip/user/<%= currentUser._id %>">My Trips</a></li>
-                        <li><a class="dropdown-item" href="/trip/user/<%= currentUser._id %>/favorites">My Favorites</a></li>
+                        <li><a class="dropdown-item" href="/trip/my">My Trips</a></li>
+                        <li><a class="dropdown-item" href="/trip/favorites">My Favorites</a></li>
                     </ul>
                 </li>
                     <% if (currentUser.role === 'admin') { %>
