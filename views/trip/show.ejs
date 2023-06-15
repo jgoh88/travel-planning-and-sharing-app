@@ -59,7 +59,7 @@
                                     <div class="mb-3">
                                         <label for="" class="form-label">Place</label>
                                         <input disabled type="text" class="form-control fw-medium" value="<%= trip.itinerary[dayIdx][placeIdx].location %>">
-                                        <a class="text-light" target="_blank" href="https://www.google.com/maps?q=<%= trip.itinerary[dayIdx][placeIdx].location %>">Open in Google Maps</a>
+                                        <a class="text-light" target="_blank" href="https://www.google.com/maps?q=<%= trip.itinerary[dayIdx][placeIdx].location %>%20<%= trip.country.countryName %>">Open in Google Maps</a>
                                         
                                     </div>
                                     <div class="mb-1">

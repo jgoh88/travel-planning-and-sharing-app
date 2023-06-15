@@ -2,12 +2,13 @@ const router = require('express').Router()
 const Country = require('../models/country.model')
 const cloudinary = require('cloudinary').v2
 const {upload, uploadImage, setCloudinaryFolder} = require('../configs/cloudinary.config')
+const {autheticatedUserPage, adminUserPage} = require('../configs/securePage.config')
 
-router.get('/', (req, res) => {
+router.get('/', [autheticatedUserPage, adminUserPage], (req, res) => {
     return res.render('admin/admin')
 })
 
-router.get('/country', async (req, res) => {
+router.get('/country', [autheticatedUserPage, adminUserPage], async (req, res) => {
     try {
         const countries = await Country.find()
         return res.render('admin/country/list', {countries: countries})
@@ -17,11 +18,11 @@ router.get('/country', async (req, res) => {
     }  
 })
 
-router.get('/country/new', (req, res) => {
+router.get('/country/new', [autheticatedUserPage, adminUserPage], (req, res) => {
     return res.render('admin/country/create')
 })
 
-router.get('/country/:id', async (req, res) => {
+router.get('/country/:id', [autheticatedUserPage, adminUserPage], async (req, res) => {
     try {
         const country = await Country.findById(req.params.id)
         return res.render('admin/country/show', {country: country})
@@ -31,7 +32,7 @@ router.get('/country/:id', async (req, res) => {
     }
 })
 
-router.get('/country/:id/edit', async (req, res) => {
+router.get('/country/:id/edit', [autheticatedUserPage, adminUserPage], async (req, res) => {
     try {
         const country = await Country.findById(req.params.id)
         return res.render('admin/country/edit', {country: country})
@@ -41,7 +42,7 @@ router.get('/country/:id/edit', async (req, res) => {
     }
 })
 
-router.post('/country', upload.single('image'), async (req, res) => {
+router.post('/country', [autheticatedUserPage, adminUserPage, upload.single('image')], async (req, res) => {
 
     try {
         const newCountry = new Country(req.body)
@@ -60,7 +61,7 @@ router.post('/country', upload.single('image'), async (req, res) => {
     }
 })
 
-router.put('/country/:id', upload.single('image'), async (req, res) => {
+router.put('/country/:id', [autheticatedUserPage, adminUserPage, upload.single('image')], async (req, res) => {
     try {
         const updatedCountry = req.body
         if (req.file) {
@@ -85,7 +86,7 @@ router.put('/country/:id', upload.single('image'), async (req, res) => {
     }
 })
 
-router.delete('/country/:id', async (req, res) => {
+router.delete('/country/:id', [autheticatedUserPage, adminUserPage], async (req, res) => {
     try {
         const deletedCountry = await Country.findByIdAndDelete(req.params.id)
         await cloudinary.uploader.destroy(deletedCountry.image.publicID, 'image')
