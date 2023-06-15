@@ -18,7 +18,7 @@
             <div class="card mb-4" style="width: 470px;">
                 <a href="/trip/<%= trip._id %>">
                     <% if (trip.images.length === 0) { %>
-                        <img src="<%= trip.country.image.url %>" alt="" class="card-img-top" style="height: 350px;">
+                        <img src="<%= trip.country.countryId.image.url %>" alt="" class="card-img-top" style="height: 350px;">
                     <% } else { %>
                         <img src="<%= trip.images[0].url %>" alt="" class="card-img-top" style="height: 350px;">
                     <% } %>
@@ -26,7 +26,7 @@
                 <div class="card-body">
                     <h4 class="card-title"><%= trip.name %></h4>
                     <p class="card-text">
-                        Country: <%= trip.country.name %> <br>
+                        Country: <%= trip.country.countryId.name %> <br>
                         Number of days: <%= trip.itinerary.length  %>
                     </p>
                     <div class="d-flex flex-row">
@@ -69,7 +69,7 @@
                     </div>
                     <div>
                         <label for=""></label>
-                        <select class="form-control" name="country" required>
+                        <select class="form-control" name="country[countryId]" required>
                             <option value="" disabled selected="selected">Choose the country for your trip</option>
                             <% countries.forEach((country) => { %>
                                 <option value="<%= country._id %>"><%= country.name %></option>
@@ -114,3 +114,10 @@
         </div>
     </div>
 </div>
+<script>
+    const tripsMenu = document.getElementById('trips-menu')
+    if (tripsMenu) {
+        tripsMenu.classList.add('active')
+        tripsMenu.setAttribute('aria-current', 'page')
+    }
+</script>

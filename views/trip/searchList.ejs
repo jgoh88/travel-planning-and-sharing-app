@@ -4,7 +4,7 @@
 <br>
 <div class="row d-flex justify-content-center mb-5">
     <div class="col-10 border-bottom">
-        <h2>Favorite Tripping plans</h2>
+        <h2>Search results for "<%= searchTerm %>"</h2>
     </div>
 </div>
 <div class="row">
@@ -43,10 +43,3 @@
         <% }) %>
     </div>
 </div>
-<script>
-    const tripsMenu = document.getElementById('trips-menu')
-    if (tripsMenu) {
-        tripsMenu.classList.add('active')
-        tripsMenu.setAttribute('aria-current', 'page')
-    }
-</script>

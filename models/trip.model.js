@@ -4,9 +4,15 @@ const Schema = mongoose.Schema
 const tripSchema = new Schema({
     name: String,
     country: {
-        type: mongoose.ObjectId,
-        ref: 'Country',
-        required: true,
+        countryId: {
+            type: mongoose.ObjectId,
+            ref: 'Country',
+            required: true,
+        },
+        countryName: {
+            type: String,
+            required: true
+        }
     },
     createdBy: {
         type: mongoose.ObjectId,
