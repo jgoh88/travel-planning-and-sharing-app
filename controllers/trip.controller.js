@@ -3,8 +3,9 @@ const Trip = require('../models/trip.model')
 const Country = require('../models/country.model')
 const User = require('../models/user.model')
 const {upload, uploadImage, setCloudinaryFolder} = require('../configs/cloudinary.config')
+const {autheticatedUserPage} = require('../configs/securePage.config')
 
-router.get('/my', async (req, res) => {
+router.get('/my', autheticatedUserPage, async (req, res) => {
     try {
         const trips = await Trip.find({createdBy: req.user.id})
             .populate({
@@ -23,7 +24,7 @@ router.get('/my', async (req, res) => {
     }
 })
 
-router.get('/favorites', async (req, res) => {
+router.get('/favorites', autheticatedUserPage, async (req, res) => {
     try {
         const user = await User.findById(req.user.id).populate({
             path: 'favorites',
@@ -69,7 +70,7 @@ router.get('/search', async (req, res) => {
     }
 })
 
-router.get('/:id', async (req, res) => {
+router.get('/:id', autheticatedUserPage, async (req, res) => {
     try {
         const trip = await Trip.findById(req.params.id)
         return res.render('trip/show', {trip: trip})
@@ -79,7 +80,7 @@ router.get('/:id', async (req, res) => {
     }
 })
 
-router.get('/:id/edit', async (req, res) => {
+router.get('/:id/edit', autheticatedUserPage, async (req, res) => {
     try {
         const trip = await Trip.findById(req.params.id)
         const countries = await Country.find()
@@ -91,7 +92,7 @@ router.get('/:id/edit', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', autheticatedUserPage, async (req, res) => {
     try {
         const newTrip = new Trip({...req.body, createdBy: req.user.id})
         const countryData = await Country.findById(newTrip.country.countryId)
@@ -112,7 +113,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', autheticatedUserPage, async (req, res) => {
     try {
         const updatedTrip = req.body
         updatedTrip.itinerary.forEach((day) => {
@@ -139,7 +140,7 @@ router.put('/:id', async (req, res) => {
     }
 })
 
-router.patch('/:id', upload.array('image', 10), async (req, res) => {
+router.patch('/:id', [autheticatedUserPage, upload.array('image', 10)], async (req, res) => {
     try {
         const sharedTrip = req.body
         sharedTrip.shared = true
@@ -165,7 +166,7 @@ router.patch('/:id', upload.array('image', 10), async (req, res) => {
     }
 })
 
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', autheticatedUserPage, async (req, res) => {
     try {
         await Trip.findByIdAndDelete(req.params.id)
         return res.redirect(`/trip/my`)
