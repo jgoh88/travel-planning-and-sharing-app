@@ -21,7 +21,12 @@
                 <select class="form-control fs-4 fw-medium" name="country[countryId]" required>
                     <option value="" disabled>Choose the country for your trip</option>
                     <% countries.forEach((country) => { %>
-                        <option value="<%= country._id %>" <% if (country._id === trip.country.countryId) { %>selected="selected"<% } %> ><%= country.name %></option>
+                        <option value="<%= country._id %>" 
+                            <% if (country.name == trip.country.countryName) { %>
+                                selected
+                            <% } %> 
+                            ><%= country.name %> 
+                        </option>
                     <% }) %>
                 </select>
             </h3>
@@ -54,7 +59,7 @@
                                             <label for="" class="form-label">Place</label>
                                             <button type="button" class="btn-close remove-place-btn" aria-label="Close"></button>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Shibuya, Tokyo" name="itinerary[0][0][location]">
+                                        <input type="text" class="form-control" placeholder="E.g. name of the shop, area and/or city" name="itinerary[0][0][location]">
                                     </div>
                                     <div class="mb-1">
                                         <label for="" class="form-label">Time</label>

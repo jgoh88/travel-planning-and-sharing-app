@@ -15,7 +15,6 @@ router.get('/my', autheticatedUserPage, async (req, res) => {
                 }
             })
 
-        console.log(trips)
         const countries = await Country.find()
         return res.render('trip/userList', {trips: trips, countries: countries})
     } catch (err) {
@@ -83,6 +82,12 @@ router.get('/:id', autheticatedUserPage, async (req, res) => {
 router.get('/:id/edit', autheticatedUserPage, async (req, res) => {
     try {
         const trip = await Trip.findById(req.params.id)
+            .populate({
+                path: 'country',
+                populate: {
+                    path: 'countryId',
+                }
+            })
         const countries = await Country.find()
 
         return res.render('trip/edit', {trip: trip, countries: countries})

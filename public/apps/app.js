@@ -85,7 +85,7 @@ function addPlace(e) {
     const inputForPlace = document.createElement('input')
     inputForPlace.classList.add('form-control')
     inputForPlace.type = 'text'
-    inputForPlace.placeholder = 'Shibuya, Tokyo'
+    inputForPlace.placeholder = 'E.g. name of the shop, area and/or city'
     inputForPlace.name = `itinerary[${dayNum}][${placeNum}][location]`
     divForPlace.appendChild(divForRemoveButton)
     divForPlace.appendChild(inputForPlace)
@@ -184,7 +184,7 @@ function addDay(e) {
     const inputForPlace = document.createElement('input')
     inputForPlace.classList.add('form-control')
     inputForPlace.type = 'text'
-    inputForPlace.placeholder = 'Shibuya, Tokyo'
+    inputForPlace.placeholder = 'E.g. name of the shop, area and/or city'
     inputForPlace.name = `itinerary[${dayNum}][0][location]`
     divForPlace.appendChild(divForRemoveButton)
     divForPlace.appendChild(inputForPlace)

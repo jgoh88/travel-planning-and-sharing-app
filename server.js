@@ -55,7 +55,13 @@ server.use(function (request, response, next) {
 })
 
 server.get('/', async (req, res) => {
-    const trips = await Trip.find({shared: true}).limit(10).sort({sharedAt: -1}).populate('country')
+    const trips = await Trip.find({shared: true}).limit(10).sort({sharedAt: -1})
+        .populate({
+            path: 'country',
+            populate: {
+                path: 'countryId',
+            }
+        })
     res.render('trip/index', {trips: trips, user: req.user})
 })
 
