@@ -39,6 +39,21 @@ router.post('/login',
     })
 )
 
+router.post('/login/google', 
+    passport.authenticate('google', {
+        scope: ['profile', 'email'],
+        prompt: 'select_account'
+    })
+)
+
+router.get('/login/google/callback', 
+    passport.authenticate('google', {
+        successRedirect: "/",
+        failureRedirect: "/user/login",
+        successFlash: "Successfully logged in",
+    })
+)
+
 router.delete('/logout', function (req, res, next) {
     req.logout(function (err) {
         if (err) {

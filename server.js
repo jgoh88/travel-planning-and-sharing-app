@@ -49,7 +49,6 @@ server.use(flash())
 
 server.use(function (request, response, next) {
     response.locals.alerts = request.flash(); //{ success: [], error: []}
-    console.log('Flash message:', response.locals.alerts)
     response.locals.currentUser = request.user; //Makes logged in user accessibile in ejs as currentUser.
     next()
 })
