@@ -20,6 +20,13 @@ const userSchema = new Schema({
         type: String,
         required: true,
     },
+    account: {
+        accountType: {
+            type: String,
+            default: 'local'
+        },
+        federatedAccountId: String,
+    },
     profilePicture: {
         type: String,
         default: 'https://icon-library.com/images/default-profile-icon/default-profile-icon-24.jpg',
