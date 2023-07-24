@@ -8,8 +8,8 @@
     </div>
 </div>
 <div class="row">
-    <div class="col d-flex flex-wrap flex-row justify-content-evenly">
-        <% countries.forEach((country) => { %>
+    <% countries.forEach((country) => { %>
+        <div class="col-4 d-flex flex-wrap justify-content-evenly">
             <div class="card mb-4" style="width: 470px;">
                 <a href="/country/<%= country._id %>">
                     <% if (country.image) { %>
@@ -25,8 +25,8 @@
                     </div>
                 </div>
             </div>
-        <% }) %>
-    </div>
+        </div>
+    <% }) %>
 </div>
 <script>
     const placesToVisitMenu = document.getElementById('places-to-visit-menu')

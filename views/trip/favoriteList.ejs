@@ -8,8 +8,8 @@
     </div>
 </div>
 <div class="row">
-    <div class="col d-flex flex-wrap flex-row justify-content-evenly">
-        <% trips.forEach((trip) => { %>
+    <% trips.forEach((trip) => { %>
+        <div class="col-4 d-flex flex-wrap justify-content-evenly">
             <div class="card mb-4" style="width: 470px;">
                 <a href="/trip/<%= trip._id %>">
                     <% if (trip.images.length === 0) { %>
@@ -42,8 +42,8 @@
                     <% } %>
                 </div>
             </div>
-        <% }) %>
-    </div>
+        </div>
+    <% }) %>
 </div>
 <script>
     const tripsMenu = document.getElementById('trips-menu')

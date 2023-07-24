@@ -7,14 +7,13 @@ const {autheticatedUserPage} = require('../configs/securePage.config')
 
 router.get('/my', autheticatedUserPage, async (req, res) => {
     try {
-        const trips = await Trip.find({createdBy: req.user.id})
+        const trips = await Trip.find({createdBy: req.user._id})
             .populate({
                 path: 'country',
                 populate: {
                     path: 'countryId'
                 }
             })
-
         const countries = await Country.find()
         return res.render('trip/userList', {trips: trips, countries: countries})
     } catch (err) {
@@ -25,7 +24,7 @@ router.get('/my', autheticatedUserPage, async (req, res) => {
 
 router.get('/favorites', autheticatedUserPage, async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).populate({
+        const user = await User.findById(req.user._id).populate({
             path: 'favorites',
             populate: {
                 path: 'country',
