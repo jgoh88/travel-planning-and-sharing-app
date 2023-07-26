@@ -29,7 +29,7 @@ $ npm install   # or yarn install
 # Create a .env file with the required variables. Refer to .env_sample 
 
 # Run application
-$ node index    # or nodemon index if you have nodemon installed. This will start the application
+$ node server   # or nodemon index if you have nodemon installed. This will start the application
 ```
 
 ## Demo
