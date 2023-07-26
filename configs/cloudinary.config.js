@@ -21,7 +21,7 @@ cloudinary.config({
 })
 
 const setCloudinaryFolder = (folderName) => {
-    cloudinaryFolder = `GAProject2TravelPlanningApp/${folderName}`
+    cloudinaryFolder = `${process.env.CLOUDINARY_PROJECT_FOLDER_NAME}/${folderName}`
 }
 
 const uploadToCloudinary = async (fileString, format) => {

@@ -9,7 +9,7 @@
 </div>
 <div class="row">
     <% trips.forEach((trip) => { %>
-        <div class="col-4 d-flex flex-wrap justify-content-evenly"></div>
+        <div class="col-4 d-flex flex-wrap justify-content-evenly">
             <div class="card mb-4" style="width: 470px;">
                 <a href="/trip/<%= trip._id %>">
                     <% if (trip.images.length === 0) { %>
